@@ -8,7 +8,7 @@
   * `add path [name]` - Adds an existing bazel install directory to the set of known bazel versions, optionally setting
     a name
   * `list` - Lists the set of known bazel version names
-  * `available` - Lists the available versions of bazel that can be installed from bazel's github releases
+  * `available` (maybe) - Lists the available versions of bazel that can be installed from bazel's github releases
   * `install name` - Downloads and installs a bazel version from bazel's github releases
   * `remove name` - Removes a bazel version from the set of known versions
 * `bazel` - A shim that delegates to the chosen real `bazel` command, setting the correct `JAVA_HOME` environment
@@ -17,7 +17,7 @@
 ## File Structure
 
 * `~/.bazenv` - User-specific bazenv config
-  * `bazenv_version` - Contains the name of the global bazel version
+  * `.bazenv_version` - Contains the name of the global bazel version
   * `/bazel/[name]*` - One directory for each named bazel install (existing installs added with `add` are symlinks)
 * `.bazenv_version` - Contains the name of the local bazel version
 
