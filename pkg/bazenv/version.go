@@ -15,6 +15,8 @@ import (
 const (
 	// BazenvDir is the name of the bazenv config directory in the user's home directory
 	BazenvDir = ".bazenv"
+	// BazenvVersionsDir is the directory under BazenvDir where bazel versions are stored
+	BazenvVersionsDir = "bazel"
 	// BazenvFile is the name of a bazenv version file, prefixed with dot when not in BazenvDir
 	BazenvFile = "bazenv_version"
 )
@@ -23,7 +25,7 @@ const (
 // global bazenv file. This returns the name of the active bazel version.
 func ReadBazenvFile() (string, error) {
 	// Local bazenv file takes priority
-	bazenv, err := findAndReadLocalBazenvFile()
+	bazenv, err := FindAndReadLocalBazenvFile()
 	if err != nil {
 		return "", err
 	}
@@ -32,7 +34,7 @@ func ReadBazenvFile() (string, error) {
 	}
 
 	// Fall back to global bazenv
-	bazenv, err = readGlobalBazenvFile()
+	bazenv, err = ReadGlobalBazenvFile()
 	if err != nil {
 		return "", err
 	}
@@ -49,7 +51,7 @@ func ResolveBazelDirectory(version string) (string, error) {
 	homedir, err := homedir.Dir()
 	check(err)
 
-	bazelDir := filepath.Join(homedir, BazenvDir, "bazel", version)
+	bazelDir := filepath.Join(homedir, BazenvDir, BazenvVersionsDir, version)
 	if _, err := os.Stat(bazelDir); os.IsNotExist(err) {
 		// bazelDir doesn't exist
 		return "", errors.New("Bazel version " + version + " does not exist")
@@ -74,7 +76,9 @@ func SetLocalBazelVersion(version string) {
 	ioutil.WriteFile(filepath.Join(currentDir, "."+BazenvFile), []byte(version), 0644)
 }
 
-func findAndReadLocalBazenvFile() (*string, error) {
+// FindAndReadLocalBazenvFile returns the contents of the local bazenv file, walking up the directory tree if needed
+// to find one
+func FindAndReadLocalBazenvFile() (*string, error) {
 	currentDir, err := os.Getwd()
 	check(err)
 
@@ -99,7 +103,8 @@ func findAndReadLocalBazenvFile() (*string, error) {
 	}
 }
 
-func readGlobalBazenvFile() (*string, error) {
+// ReadGlobalBazenvFile returns the contents of global bazenv file
+func ReadGlobalBazenvFile() (*string, error) {
 	homedir, err := homedir.Dir()
 	check(err)
 

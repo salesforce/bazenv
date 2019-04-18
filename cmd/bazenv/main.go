@@ -12,6 +12,7 @@ func main() {
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(&globalCmd{}, "")
 	subcommands.Register(&localCmd{}, "")
+	subcommands.Register(&listCmd{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
