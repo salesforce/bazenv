@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:9565826757d815638581d6e3a2704b64400928ef9cba84c3cb21b2dc93eca4d5"
+  name = "github.com/google/subcommands"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d47216cd17848d55a33e6f651cbe408243ed55b8"
+  version = "1.0.1"
+
+[[projects]]
   digest = "1:5d231480e1c64a726869bc4142d270184c419749d34f167646baa21008eb0a79"
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
@@ -12,6 +20,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/mitchellh/go-homedir"]
+  input-imports = [
+    "github.com/google/subcommands",
+    "github.com/mitchellh/go-homedir",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
