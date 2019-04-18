@@ -45,21 +45,6 @@ func ReadBazenvFile() (string, error) {
 	return "", errors.New("Could not find global or local " + BazenvFile)
 }
 
-// ResolveBazelDirectory converts a bazel version name into the path to a bazel install directory, or retuns an error
-// if the install doesn't exist.
-func ResolveBazelDirectory(version string) (string, error) {
-	homedir, err := homedir.Dir()
-	check(err)
-
-	bazelDir := filepath.Join(homedir, BazenvDir, BazenvVersionsDir, version)
-	if _, err := os.Stat(bazelDir); os.IsNotExist(err) {
-		// bazelDir doesn't exist
-		return "", errors.New("Bazel version " + version + " does not exist")
-	}
-
-	return bazelDir, nil
-}
-
 // SetGlobalBazelVersion sets a global bazenv_version file in ~/.bazenv/bazenv_version
 func SetGlobalBazelVersion(version string) {
 	homedir, err := homedir.Dir()
