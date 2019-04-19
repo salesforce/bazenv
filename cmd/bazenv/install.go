@@ -10,7 +10,7 @@ import (
 
 	"github.com/google/subcommands"
 	"github.com/mitchellh/go-homedir"
-	"github.com/ryanmichela/bazenv/pkg/bazenv"
+	"github.com/salesforce/bazenv/pkg/bazenv"
 )
 
 type installCmd struct{}

@@ -11,6 +11,7 @@
   * `available` (maybe) - Lists the available versions of bazel that can be installed from bazel's github releases
   * `install name` - Downloads and installs a bazel version from bazel's github releases
   * `remove name` - Removes a bazel version from the set of known versions
+  * `doctor` - Analyze bazenv configuration and present fixes
 * `bazel` - A shim that delegates to the chosen real `bazel` command, setting the correct `JAVA_HOME` environment
   variable and passing in the provided command line parameters
 

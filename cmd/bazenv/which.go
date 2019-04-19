@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/ryanmichela/bazenv/pkg/bazenv"
+	"github.com/salesforce/bazenv/pkg/bazenv"
 
 	"github.com/google/subcommands"
 )

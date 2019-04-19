@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/google/subcommands"
-	"github.com/ryanmichela/bazenv/pkg/bazenv"
+	"github.com/salesforce/bazenv/pkg/bazenv"
 )
 
 type localCmd struct{}

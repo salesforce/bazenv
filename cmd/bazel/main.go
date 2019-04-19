@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/ryanmichela/bazenv/pkg/bazenv"
+	"github.com/salesforce/bazenv/pkg/bazenv"
 )
 
 func main() {
