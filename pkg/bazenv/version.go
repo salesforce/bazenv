@@ -21,6 +21,12 @@ const (
 	BazenvFile = "bazenv_version"
 )
 
+// EnsureBazenvDir creates the bazenv working directoy if not found
+func EnsureBazenvDir() {
+	homedir, _ := homedir.Dir()
+	os.MkdirAll(filepath.Join(homedir, BazenvDir, BazenvVersionsDir), os.ModePerm)
+}
+
 // ReadBazenvFile reads the content of .bazenv_version, looking locally up the directiory tree first, then in the
 // global bazenv file. This returns the name of the active bazel version.
 func ReadBazenvFile() (string, error) {
@@ -46,26 +52,34 @@ func ReadBazenvFile() (string, error) {
 }
 
 // SetGlobalBazelVersion sets a global bazenv_version file in ~/.bazenv/bazenv_version
-func SetGlobalBazelVersion(version string) {
+func SetGlobalBazelVersion(version string) error {
 	homedir, err := homedir.Dir()
-	check(err)
+	if err != nil {
+		return err
+	}
 
 	ioutil.WriteFile(filepath.Join(homedir, BazenvDir, BazenvFile), []byte(version), 0644)
+	return nil
 }
 
 // SetLocalBazelVersion sets a local .bazenv_version file in CWD
-func SetLocalBazelVersion(version string) {
+func SetLocalBazelVersion(version string) error {
 	currentDir, err := os.Getwd()
-	check(err)
+	if err != nil {
+		return err
+	}
 
 	ioutil.WriteFile(filepath.Join(currentDir, "."+BazenvFile), []byte(version), 0644)
+	return nil
 }
 
 // FindAndReadLocalBazenvFile returns the contents of the local bazenv file, walking up the directory tree if needed
 // to find one
 func FindAndReadLocalBazenvFile() (*string, error) {
 	currentDir, err := os.Getwd()
-	check(err)
+	if err != nil {
+		return nil, err
+	}
 
 	for {
 		// Try reading .bazenv_version
@@ -91,7 +105,9 @@ func FindAndReadLocalBazenvFile() (*string, error) {
 // ReadGlobalBazenvFile returns the contents of global bazenv file
 func ReadGlobalBazenvFile() (*string, error) {
 	homedir, err := homedir.Dir()
-	check(err)
+	if err != nil {
+		return nil, err
+	}
 
 	versionName, err := ioutil.ReadFile(filepath.Join(homedir, BazenvDir, BazenvFile))
 	if err != nil {
@@ -103,10 +119,4 @@ func ReadGlobalBazenvFile() (*string, error) {
 
 	versionNameString := strings.TrimSpace(string(versionName))
 	return &versionNameString, nil
-}
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
 }

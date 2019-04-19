@@ -14,7 +14,9 @@ import (
 // if the install doesn't exist.
 func ResolveBazelDirectory(version string) (string, error) {
 	homedir, err := homedir.Dir()
-	check(err)
+	if err != nil {
+		return "", err
+	}
 
 	bazelDir := filepath.Join(homedir, BazenvDir, BazenvVersionsDir, version)
 	if _, err := os.Stat(bazelDir); os.IsNotExist(err) {

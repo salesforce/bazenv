@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	bazenv.EnsureBazenvDir()
+
 	bazelProfile, err := bazenv.ReadBazenvFile()
 	if err != nil {
 		fmt.Println("Error reading global or local bazenv_version file: " + err.Error())

@@ -6,9 +6,12 @@ import (
 	"os"
 
 	"github.com/google/subcommands"
+	"github.com/ryanmichela/bazenv/pkg/bazenv"
 )
 
 func main() {
+	bazenv.EnsureBazenvDir()
+
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(&globalCmd{}, "")
 	subcommands.Register(&localCmd{}, "")
@@ -16,6 +19,7 @@ func main() {
 	subcommands.Register(&addCmd{}, "")
 	subcommands.Register(&removeCmd{}, "")
 	subcommands.Register(&whichCmd{}, "")
+	subcommands.Register(&installCmd{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
