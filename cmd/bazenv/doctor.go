@@ -23,12 +23,18 @@ func (*doctorCmd) Synopsis() string {
 }
 
 func (g *doctorCmd) Usage() string {
-	return "doctor\n" + g.Synopsis()
+	return "bazenv doctor\n" + g.Synopsis()
 }
 
 func (g *doctorCmd) SetFlags(f *flag.FlagSet) {}
 
 func (g *doctorCmd) Execute(_ context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
+	// Sanity check input
+	if len(f.Args()) > 0 {
+		fmt.Println("Too many arguments.")
+		return subcommands.ExitUsageError
+	}
+
 	// Check: Bazel executable is bazenv stub
 	isBazenv, err := bazenv.SniffIsBazenvStub()
 	if err != nil {

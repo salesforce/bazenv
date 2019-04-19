@@ -20,7 +20,7 @@ func (*removeCmd) Synopsis() string {
 }
 
 func (g *removeCmd) Usage() string {
-	return "remove version\n" + g.Synopsis()
+	return "bazenv remove <version>\n" + g.Synopsis()
 }
 
 func (g *removeCmd) SetFlags(f *flag.FlagSet) {}

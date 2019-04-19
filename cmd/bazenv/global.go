@@ -20,7 +20,7 @@ func (*globalCmd) Synopsis() string {
 }
 
 func (g *globalCmd) Usage() string {
-	return "global <version name>\n" + g.Synopsis()
+	return "bazenv global <version name>\n" + g.Synopsis()
 }
 
 func (g *globalCmd) SetFlags(f *flag.FlagSet) {}

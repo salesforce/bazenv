@@ -21,7 +21,7 @@ func (*whichCmd) Synopsis() string {
 }
 
 func (g *whichCmd) Usage() string {
-	return "which [version]\n" + g.Synopsis()
+	return "bazenv which [version]\n" + g.Synopsis()
 }
 
 func (g *whichCmd) SetFlags(f *flag.FlagSet) {}

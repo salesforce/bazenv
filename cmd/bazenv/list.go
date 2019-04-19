@@ -20,12 +20,18 @@ func (*listCmd) Synopsis() string {
 }
 
 func (l *listCmd) Usage() string {
-	return "list\n" + l.Synopsis()
+	return "bazenv list\n" + l.Synopsis()
 }
 
 func (l *listCmd) SetFlags(f *flag.FlagSet) {}
 
 func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	// Sanity check input
+	if len(f.Args()) > 0 {
+		fmt.Println("Too many arguments.")
+		return subcommands.ExitUsageError
+	}
+
 	versions, err := bazenv.ListBazelVersions()
 	if err != nil {
 		fmt.Println("Error listing bazel versions: " + err.Error())

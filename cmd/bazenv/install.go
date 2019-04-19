@@ -24,7 +24,7 @@ func (*installCmd) Synopsis() string {
 }
 
 func (g *installCmd) Usage() string {
-	return "install version\n" + g.Synopsis()
+	return "bazenv install <version>\n" + g.Synopsis()
 }
 
 func (g *installCmd) SetFlags(f *flag.FlagSet) {}

@@ -20,7 +20,7 @@ func (*localCmd) Synopsis() string {
 }
 
 func (l *localCmd) Usage() string {
-	return "local <version name>\n" + l.Synopsis()
+	return "bazenv local <version name>\n" + l.Synopsis()
 }
 
 func (l *localCmd) SetFlags(f *flag.FlagSet) {}

@@ -16,11 +16,11 @@ func (*addCmd) Name() string {
 }
 
 func (*addCmd) Synopsis() string {
-	return "add a bazel install directory to bazenv"
+	return "add an bazel install directory to bazenv"
 }
 
 func (g *addCmd) Usage() string {
-	return "add path [name]\n" + g.Synopsis()
+	return "bazenv add <path> [name]\n" + g.Synopsis()
 }
 
 func (g *addCmd) SetFlags(f *flag.FlagSet) {}
