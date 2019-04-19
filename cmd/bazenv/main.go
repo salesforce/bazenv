@@ -13,6 +13,9 @@ func main() {
 	subcommands.Register(&globalCmd{}, "")
 	subcommands.Register(&localCmd{}, "")
 	subcommands.Register(&listCmd{}, "")
+	subcommands.Register(&addCmd{}, "")
+	subcommands.Register(&removeCmd{}, "")
+	subcommands.Register(&whichCmd{}, "")
 
 	flag.Parse()
 	ctx := context.Background()

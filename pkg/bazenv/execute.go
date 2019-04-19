@@ -3,7 +3,9 @@ package bazenv
 import (
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"regexp"
 
 	"github.com/mitchellh/go-homedir"
 )
@@ -21,5 +23,28 @@ func ResolveBazelDirectory(version string) (string, error) {
 			" global bazel version.")
 	}
 
+	// Try to dereference bazelDir, if it is a symlink
+	bazelDir, err = os.Readlink(bazelDir)
+
 	return bazelDir, nil
+}
+
+// SniffBazelVersion uses the 'bazel version' command to return the version name of a bazel directory, or returns
+// an error.
+func SniffBazelVersion(path string) (string, error) {
+	rawVersion, err := exec.Command(filepath.Join(path, "bin", "bazel"), "version").Output()
+	if err != nil {
+		// Error executing bazel
+		return "", err
+	}
+
+	versionRegex := regexp.MustCompile(`Build label: (.*)\n`)
+	match := versionRegex.FindStringSubmatch(string(rawVersion))
+
+	if len(match) != 2 {
+		// Version string not found
+		return "", errors.New("Not a bazel install directory: " + path)
+	}
+
+	return match[1], nil
 }

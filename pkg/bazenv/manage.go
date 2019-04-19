@@ -30,14 +30,19 @@ func ListBazelVersions() ([]string, error) {
 }
 
 // AddBazelVersion adds an existing bazel version (specified by path) to the set fo bazel versions known to bazenv
-func AddBazelVersion(version, path string) error {
+func AddBazelVersion(path, version string) error {
 	homedir, err := homedir.Dir()
 	if err != nil {
 		return err
 	}
 
 	newpath := filepath.Join(homedir, BazenvDir, BazenvVersionsDir, version)
-	return os.Symlink(path, newpath)
+	err = os.Symlink(path, newpath)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // RemoveBazelVersion removes a bazel version from the set of versions known to bazenv. If the version is a symlink
@@ -58,7 +63,6 @@ func RemoveBazelVersion(version string) error {
 
 	if isSymlink {
 		return os.Remove(path)
-	} else {
-		return os.RemoveAll(path)
 	}
+	return os.RemoveAll(path)
 }
