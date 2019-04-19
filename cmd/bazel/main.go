@@ -12,6 +12,12 @@ import (
 func main() {
 	bazenv.EnsureBazenvDir()
 
+	// Respond to bazenv sniff used by doctor command
+	if len(os.Args) == 2 && os.Args[1] == "bazenv" {
+		fmt.Println("yes")
+		os.Exit(0)
+	}
+
 	bazelProfile, err := bazenv.ReadBazenvFile()
 	if err != nil {
 		fmt.Println("Error reading global or local bazenv_version file: " + err.Error())
@@ -25,7 +31,6 @@ func main() {
 	}
 
 	// Execute the selected real bazel entry point
-	// binary := "/usr/local/Cellar/bazel/0.23.2/libexec/bin/bazel"
 	binary := filepath.Join(bazelDir, "bin", "bazel")
 	args := os.Args
 	env := os.Environ()

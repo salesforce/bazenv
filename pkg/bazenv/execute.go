@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strings"
 
 	"github.com/mitchellh/go-homedir"
 )
@@ -25,9 +26,23 @@ func ResolveBazelDirectory(version string) (string, error) {
 			" global bazel version.")
 	}
 
-	// Try to dereference bazelDir, if it is a symlink
-	bazelDir, err = os.Readlink(bazelDir)
+	// Determine if bazel is symlink
+	fi, err := os.Lstat(bazelDir)
+	if err != nil {
+		return "", err
+	}
+	if fi.Mode()&os.ModeSymlink == os.ModeSymlink {
+		// This is a symlink
+		bazelLink, err := os.Readlink(bazelDir)
+		if err != nil {
+			return "", err
+		}
+		if bazelLink != "" {
+			return bazelLink, nil
+		}
+	}
 
+	// Not a symlink
 	return bazelDir, nil
 }
 
@@ -49,4 +64,14 @@ func SniffBazelVersion(path string) (string, error) {
 	}
 
 	return match[1], nil
+}
+
+// SniffIsBazenvStub returns true of the installed bazel command is a bazenv stub
+func SniffIsBazenvStub() (bool, error) {
+	output, err := exec.Command("bazel", "bazenv").Output()
+	if err != nil {
+		return false, err
+	}
+
+	return strings.TrimSpace(string(output)) == "yes", nil
 }

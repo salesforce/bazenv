@@ -20,6 +20,7 @@ func main() {
 	subcommands.Register(&removeCmd{}, "")
 	subcommands.Register(&whichCmd{}, "")
 	subcommands.Register(&installCmd{}, "")
+	subcommands.Register(&doctorCmd{}, "")
 
 	flag.Parse()
 	ctx := context.Background()
