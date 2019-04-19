@@ -54,6 +54,8 @@ func (l *listCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) 
 		printname := name
 		if (global != nil && name == *global) || (local != nil && name == *local) {
 			printname = "* " + printname + " "
+		} else {
+			printname = "  " + printname
 		}
 		if global != nil && name == *global {
 			printname += "(global)"
