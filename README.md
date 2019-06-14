@@ -6,7 +6,7 @@ basis. Bazenv is inspired by `jenv` and `rbenv`, which solve the same problem fo
 
 ## Installation
 
-1. Bazenv is built with go. To download: `go get -d github.com/salesforce/bazenv`
+1. Bazenv is built with go. To download: `go get -d github.com/salesforce/bazenv/...`
 1. Install Bazenv with `make deps install`. This will build `bazenv` and its `bazel` stub.
 1. Make sure `$GOHOME/bin` is at the beginning of your path.
 1. Install a version of Bazel with `bazenv install <version>`.
